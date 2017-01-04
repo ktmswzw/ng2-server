@@ -1,0 +1,72 @@
+package com.xecoder.common.utils;
+
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
+import java.util.Random;
+
+/**
+ * Created by yanglu
+ */
+public class RadomUtils {
+    private static int DEFAULT_KEY_LENGTH = 32;
+    private static SecureRandom random = null;
+
+    private static Random randomZ = null;
+    /**
+     * 获取随机字符串
+     *
+     * @param keyLength 字符串长度
+     * @return 随机字符串
+     */
+    public static String getRadomStr(int keyLength) {
+        random = RadomUtils(random);
+        byte[] buffer = new byte[keyLength];
+        random.nextBytes(buffer);
+        String str = null;
+        try {
+            str = new String(buffer,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    private static SecureRandom RadomUtils(SecureRandom random){
+        if (random == null) {
+            try {
+                random = SecureRandom.getInstance("SHA1PRNG", "SUN");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (NoSuchProviderException e) {
+                e.printStackTrace();
+            }
+        }
+        return random;
+    }
+
+    public static byte[] getRadomByte(int keyLength) {
+        random = RadomUtils(random);
+        byte[] buffer = new byte[keyLength];
+        random.nextBytes(buffer);
+        return buffer;
+    }
+
+
+    public static  byte[] getRadomByte() {
+        return getRadomByte(DEFAULT_KEY_LENGTH);
+    }
+
+    public static int nextFourInt(){
+        if(randomZ ==null )
+            randomZ = new Random();
+        return randomZ.nextInt(8999)+1000;
+
+    }
+
+    public static String getRadomStr() {
+        return getRadomStr(DEFAULT_KEY_LENGTH);
+    }
+}

@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<properties>
@@ -68,6 +68,12 @@
 			<version>1.0.27</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
@@ -78,6 +84,23 @@
 			<artifactId>mapper</artifactId>
 			<version>${mapper.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cz.jirutka.spring</groupId>
+			<artifactId>spring-rest-exception-handler</artifactId>
+			<version>1.2.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -86,6 +109,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<dependencies>
+				<!-- 热部署-->
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.6.RELEASE</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<jvmArguments>
+						-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=55555 -DApp_env=dev
+					</jvmArguments>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
@@ -96,8 +132,8 @@
                     <configurationFile>src/main/resources/mybatisG/core.xml</configurationFile>
 					<!-- 业务表配置文件-->
 					<!--<configurationFile>src/main/resources/mybatisG/business.xml</configurationFile>-->
-					<!-- 代码生成配置文件--><!--
-                    <configurationFile>src/main/resources/mybatisG/generator.xml</configurationFile>-->
+					<!-- 代码生成配置文件-->
+					<!--<configurationFile>src/main/resources/mybatisG/generator.xml</configurationFile>-->
 					<overwrite>false</overwrite>
 				</configuration>
 			</plugin>

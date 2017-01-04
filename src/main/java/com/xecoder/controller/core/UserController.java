@@ -1,5 +1,6 @@
 package com.xecoder.controller.core;
 
+import com.xecoder.config.BaseController;
 import com.xecoder.entity.core.User;
 import com.xecoder.service.core.UserService;
 import org.slf4j.Logger;
@@ -13,8 +14,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/api/user")
+public class UserController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -25,7 +26,6 @@ public class UserController {
     @RequestMapping(value="/list")
     @ResponseBody
     public List<User> userList(){
-
         return userService.getList(new User());
     }
 }
