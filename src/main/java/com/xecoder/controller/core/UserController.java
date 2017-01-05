@@ -26,6 +26,9 @@ public class UserController extends BaseController {
     @RequestMapping(value="/list")
     @ResponseBody
     public List<User> userList(){
-        return userService.getList(new User());
+        User user = new User();
+        user.setPage(1);
+        user.setRows(10);
+        return userService.getList(user);
     }
 }

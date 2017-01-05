@@ -1,5 +1,6 @@
 package com.xecoder.service.core;
 
+import com.github.pagehelper.PageHelper;
 import com.xecoder.entity.core.User;
 import com.xecoder.mapper.core.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<User> getList(User user){
+        PageHelper.startPage(user.getPage(), user.getRows());
         List<User> list = userMapper.selectAll();
         return list;
     }
