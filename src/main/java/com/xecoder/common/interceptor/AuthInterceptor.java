@@ -1,6 +1,9 @@
 package com.xecoder.common.interceptor;
 
+import com.xecoder.common.exception.SysException;
+import com.xecoder.common.exception.factor.UserExcepFactor;
 import com.xecoder.common.utils.BaseBean;
+import com.xecoder.common.utils.JWTCode;
 import com.xecoder.config.BaseController;
 import com.xecoder.config.NonAuthoritative;
 import org.springframework.web.method.HandlerMethod;
@@ -10,10 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
-/**
- * Created by yanglu
- */
 public class AuthInterceptor implements HandlerInterceptor {
 
 
@@ -40,37 +41,37 @@ public class AuthInterceptor implements HandlerInterceptor {
         String authorization;
         String userId;
 
-//        if (request.getHeader(JWTCode.AUTHORIZATION_STR) != null) {
-//            authorization = request.getHeader(JWTCode.AUTHORIZATION_STR);
-//        }
-//        else if(request.getParameter(JWTCode.AUTHORIZATION_STR)!=null){//静态服务器调用时，数据放在url里面
-//            authorization = request.getParameter(JWTCode.AUTHORIZATION_STR);
-//        } else {
-//            throw new HabitException(HttpStatus.MULTI_STATUS,"111");
-//        }
+        if (request.getHeader(JWTCode.AUTHORIZATION_STR) != null) {
+            authorization = request.getHeader(JWTCode.AUTHORIZATION_STR);
+        }
+        else if(request.getParameter(JWTCode.AUTHORIZATION_STR)!=null){//静态服务器调用时，数据放在url里面
+            authorization = request.getParameter(JWTCode.AUTHORIZATION_STR);
+        } else {
+            throw new SysException(UserExcepFactor.AUTH_FAILED);
+        }
 
-//
-//        try {
-//            Map<String, Object> claims = JWTCode.VERIFIER.verify(authorization);//不会被篡改和超期
-//            if(claims.size()!=0)
-//            {
-//                if(!claims.containsKey("exp"))//必须有超期限制
-//                {
-//                    throw new SysException(UserExcepFactor.AUTH_FAILED);
-//                }
-//            }
-//
-//            userId = String.valueOf(claims.get(BaseController.USERID_STR));//获取用户信息
-//            request.setAttribute("claims", claims);
-//        }
-//        catch (Exception e) {
-//            throw new SysException(UserExcepFactor.AUTH_FAILED);
-//        }
+
+        try {
+            Map<String, Object> claims = JWTCode.VERIFIER.verify(authorization);//不会被篡改和超期
+            if(claims.size()!=0)
+            {
+                if(!claims.containsKey("exp"))//必须有超期限制
+                {
+                    throw new SysException(UserExcepFactor.AUTH_FAILED);
+                }
+            }
+
+            userId = String.valueOf(claims.get(BaseController.USERID_STR));//获取用户信息
+            request.setAttribute("claims", claims);
+        }
+        catch (Exception e) {
+            throw new SysException(UserExcepFactor.AUTH_FAILED);
+        }
 
 
         if(!((HandlerMethod) handler).getBean().getClass().getName().equals("org.springframework.boot.autoconfigure.static.BasicErrorController")) {
             BaseController base = (BaseController) ((HandlerMethod) handler).getBean();
-            //base.setUserId(userId);
+            base.setUserId(userId);
             BaseBean baseBean = new BaseBean();
             baseBean.setBaseCreator("系统用户");
             baseBean.setBaseLastModifier("最后修");

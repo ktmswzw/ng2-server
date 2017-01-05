@@ -7,9 +7,6 @@ import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
-/**
- * Created by yanglu
- */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SystemErrorMsg implements Serializable{
     private static final long serialVersionUID = 1L;

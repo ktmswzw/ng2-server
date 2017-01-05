@@ -10,9 +10,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-/**
- * Created by yanglu
- */
 public class DateUtils {
 
     public static String DATE_PATTEN_TM = "yyyy-MM-dd HH:mm:ss";

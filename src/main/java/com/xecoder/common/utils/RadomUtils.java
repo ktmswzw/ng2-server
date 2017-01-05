@@ -7,9 +7,6 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.Random;
 
-/**
- * Created by yanglu
- */
 public class RadomUtils {
     private static int DEFAULT_KEY_LENGTH = 32;
     private static SecureRandom random = null;

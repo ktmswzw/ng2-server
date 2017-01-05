@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by yanglu
- */
 public class LogInterceptor implements HandlerInterceptor {
 
     Date beginTime;
