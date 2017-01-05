@@ -1,4 +1,4 @@
-package com.xecoder.entity;
+package com.xecoder.config;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,8 +1,8 @@
-package com.xecoder.service.core;
+package com.xecoder.core.service;
 
 import com.github.pagehelper.PageHelper;
-import com.xecoder.entity.core.User;
-import com.xecoder.mapper.core.UserMapper;
+import com.xecoder.core.entity.User;
+import com.xecoder.core.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

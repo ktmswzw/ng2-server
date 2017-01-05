@@ -1,8 +1,8 @@
-package com.xecoder.controller.core;
+package com.xecoder.core.controller;
 
 import com.xecoder.config.BaseController;
-import com.xecoder.entity.core.User;
-import com.xecoder.service.core.UserService;
+import com.xecoder.core.entity.User;
+import com.xecoder.core.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

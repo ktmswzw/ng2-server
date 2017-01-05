@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xecoder.mapper.core.RoleMapper">
-  <resultMap id="BaseResultMap" type="com.xecoder.entity.core.Role">
+<mapper namespace="com.xecoder.core.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.xecoder.core.entity.Role">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List">
     id, description, name
   </sql>
-  <select id="selectByExample" parameterType="com.xecoder.entity.core.RoleCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xecoder.core.entity.RoleCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -91,19 +91,19 @@
     delete from security_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xecoder.entity.core.RoleCriteria">
+  <delete id="deleteByExample" parameterType="com.xecoder.core.entity.RoleCriteria">
     delete from security_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xecoder.entity.core.Role">
+  <insert id="insert" parameterType="com.xecoder.core.entity.Role">
     insert into security_role (id, description, name
       )
     values (#{id,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xecoder.entity.core.Role">
+  <insert id="insertSelective" parameterType="com.xecoder.core.entity.Role">
     insert into security_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xecoder.entity.core.RoleCriteria" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.xecoder.core.entity.RoleCriteria" resultType="java.lang.Long">
     select count(*) from security_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -160,7 +160,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xecoder.entity.core.Role">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xecoder.core.entity.Role">
     update security_role
     <set>
       <if test="description != null">
@@ -172,13 +172,13 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xecoder.entity.core.Role">
+  <update id="updateByPrimaryKey" parameterType="com.xecoder.core.entity.Role">
     update security_role
     set description = #{description,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.xecoder.entity.core.RoleCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.xecoder.core.entity.RoleCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -192,7 +192,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <resultMap id="BaseResultMap" type="com.xecoder.entity.core.Role">
+  <resultMap id="BaseResultMap" type="com.xecoder.core.entity.Role">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -258,7 +258,7 @@
   <sql id="Base_Column_List">
     id, description, name
   </sql>
-  <select id="selectByExample" parameterType="com.xecoder.entity.core.RoleCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xecoder.core.entity.RoleCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -282,19 +282,19 @@
     delete from security_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xecoder.entity.core.RoleCriteria">
+  <delete id="deleteByExample" parameterType="com.xecoder.core.entity.RoleCriteria">
     delete from security_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xecoder.entity.core.Role">
+  <insert id="insert" parameterType="com.xecoder.core.entity.Role">
     insert into security_role (id, description, name
       )
     values (#{id,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xecoder.entity.core.Role">
+  <insert id="insertSelective" parameterType="com.xecoder.core.entity.Role">
     insert into security_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -319,7 +319,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xecoder.entity.core.RoleCriteria" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.xecoder.core.entity.RoleCriteria" resultType="java.lang.Long">
     select count(*) from security_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -351,7 +351,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xecoder.entity.core.Role">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xecoder.core.entity.Role">
     update security_role
     <set>
       <if test="description != null">
@@ -363,13 +363,13 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xecoder.entity.core.Role">
+  <update id="updateByPrimaryKey" parameterType="com.xecoder.core.entity.Role">
     update security_role
     set description = #{description,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.xecoder.entity.core.RoleCriteria" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.xecoder.core.entity.RoleCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct

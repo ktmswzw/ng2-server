@@ -1,7 +1,7 @@
-package com.xecoder.entity.core;
+package com.xecoder.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.xecoder.entity.BaseEntity;
+import com.xecoder.config.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;

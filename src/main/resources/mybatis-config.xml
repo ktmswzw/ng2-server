@@ -24,6 +24,6 @@
         <package name="com.xecoder.entity.core"/>
     </typeAliases>
     <mappers>
-        <mapper resource="mapper/core/UserMapper.xml"/>
+        <mapper resource="mapper/core/**.xml"/>
     </mappers>
 </configuration>

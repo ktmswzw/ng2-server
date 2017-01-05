@@ -1,4 +1,4 @@
-package com.xecoder.entity.core;
+package com.xecoder.core.entity;
 
 import java.util.ArrayList;
 import java.util.Date;

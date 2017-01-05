@@ -1,13 +1,16 @@
-package com.xecoder.mapper.core;
+package com.xecoder.core.mapper;
 
-import com.xecoder.entity.core.Role;
-import com.xecoder.entity.core.RoleCriteria;
+import com.xecoder.config.MybatisMapper;
+import com.xecoder.core.entity.Role;
+import com.xecoder.core.entity.RoleCriteria;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
-public interface RoleMapper {
+@Mapper
+public interface RoleMapper  extends MybatisMapper<Role> {
     long countByExample(RoleCriteria example);
 
     int deleteByExample(RoleCriteria example);

@@ -1,4 +1,4 @@
-package com.xecoder.entity.core;
+package com.xecoder.core.entity;
 
 public class Role {
     private Long id;
