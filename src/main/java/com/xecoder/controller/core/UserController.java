@@ -1,5 +1,7 @@
 package com.xecoder.controller.core;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xecoder.common.utils.LocaleMessageSourceUtil;
 import com.xecoder.config.BaseController;
 import com.xecoder.entity.core.User;
 import com.xecoder.service.core.UserService;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/user")
@@ -21,11 +21,17 @@ public class UserController extends BaseController {
 
 
     @Autowired
+    private LocaleMessageSourceUtil messageSourceUtil;
+
+    @Autowired
     private UserService userService;
 
     @RequestMapping(value="/list")
     @ResponseBody
-    public List<User> userList(){
-        return userService.getList(new User());
+    public JSONObject userList(){
+        System.out.println(" = " + messageSourceUtil.getMessage("error"));
+        JSONObject result = new JSONObject();
+        result.put("list",userService.getList(new User()));
+        return result;
     }
 }

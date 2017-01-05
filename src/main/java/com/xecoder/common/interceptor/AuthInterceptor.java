@@ -1,11 +1,8 @@
 package com.xecoder.common.interceptor;
 
-import com.xecoder.common.exception.HabitException;
 import com.xecoder.common.utils.BaseBean;
-import com.xecoder.common.utils.JWTCode;
 import com.xecoder.config.BaseController;
 import com.xecoder.config.NonAuthoritative;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,14 +40,14 @@ public class AuthInterceptor implements HandlerInterceptor {
         String authorization;
         String userId;
 
-        if (request.getHeader(JWTCode.AUTHORIZATION_STR) != null) {
-            authorization = request.getHeader(JWTCode.AUTHORIZATION_STR);
-        }
-        else if(request.getParameter(JWTCode.AUTHORIZATION_STR)!=null){//静态服务器调用时，数据放在url里面
-            authorization = request.getParameter(JWTCode.AUTHORIZATION_STR);
-        } else {
-            throw new HabitException(HttpStatus.MULTI_STATUS,"111");
-        }
+//        if (request.getHeader(JWTCode.AUTHORIZATION_STR) != null) {
+//            authorization = request.getHeader(JWTCode.AUTHORIZATION_STR);
+//        }
+//        else if(request.getParameter(JWTCode.AUTHORIZATION_STR)!=null){//静态服务器调用时，数据放在url里面
+//            authorization = request.getParameter(JWTCode.AUTHORIZATION_STR);
+//        } else {
+//            throw new HabitException(HttpStatus.MULTI_STATUS,"111");
+//        }
 
 //
 //        try {
