@@ -1,6 +1,5 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.xecoder.config.SystemInterceptors,\
 com.xecoder.config.MyBatisMapperScannerConfig,\
 com.xecoder.config.MyBatisConfig,\
 com.xecoder.config.DruidConfiguration
