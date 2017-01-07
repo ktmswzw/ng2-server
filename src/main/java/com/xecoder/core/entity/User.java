@@ -5,10 +5,12 @@ import com.xecoder.config.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "security_user")
-public class User extends BaseEntity{
+public class User extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = -5588204054182161257L;
 
@@ -123,15 +125,10 @@ public class User extends BaseEntity{
 	private String plainPassword;
 
     @Transient
-    private String theme;
+    private Organization organization;
 
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
+    @Transient
+    private List<UserRole> userRoles;
 
 	public String getPlainPassword() {
 		return plainPassword;
@@ -141,6 +138,33 @@ public class User extends BaseEntity{
 		this.plainPassword = plainPassword;
 	}
 
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
+        String role_s = "";
+        int i=0;
+        for(UserRole userRole:userRoles)
+        {
+            if(i<userRoles.size()-1)
+                role_s += userRole.getRoleId().toString()+",";
+            else
+                role_s += userRole.getRoleId().toString();
+            i++;
+        }
+        this.setRoles(role_s);
+    }
     @Transient
     private String roles;
 

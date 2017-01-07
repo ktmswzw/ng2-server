@@ -1,13 +1,19 @@
 package com.xecoder.common.utils;
 
-
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class RadomUtils {
+/**
+ * Created by  moxz
+ * User: 224911261@qq.com
+ * 2016/1/11-16:07
+ * Feeling.com.xecoder.common
+ */
+public class RandomUtils {
+
     private static int DEFAULT_KEY_LENGTH = 32;
     private static SecureRandom random = null;
 
@@ -52,15 +58,17 @@ public class RadomUtils {
     }
 
 
-    public static  byte[] getRadomByte() {
-        return getRadomByte(DEFAULT_KEY_LENGTH);
-    }
-
     public static int nextFourInt(){
         if(randomZ ==null )
             randomZ = new Random();
         return randomZ.nextInt(8999)+1000;
 
+    }
+
+
+
+    public static  byte[] getRadomByte() {
+        return getRadomByte(DEFAULT_KEY_LENGTH);
     }
 
     public static String getRadomStr() {
