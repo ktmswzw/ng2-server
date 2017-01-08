@@ -2,11 +2,15 @@ package com.xecoder.core.entity;
 
 import com.xecoder.config.BaseEntity;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name = "security_ext_msg")
 public class ExtMsg  extends BaseEntity implements Serializable {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;

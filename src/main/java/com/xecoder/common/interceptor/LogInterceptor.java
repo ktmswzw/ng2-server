@@ -29,18 +29,25 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        String uid;
+        String result;
         HandlerMethod method = (HandlerMethod) handler;
-        BaseController baseController = (BaseController) method.getBean();
+        try {
+            BaseController baseController = (BaseController) method.getBean();
+            ContentResposeWrapper wrapper = (ContentResposeWrapper) response;
+            uid = baseController.getUserId();
+            result = new String(wrapper.getContentAsByteArray());
+        } catch (Exception e) {
+            uid = "500";
+            result = "null";
+        }
         Date now = new Date();
-        ContentResposeWrapper wrapper = (ContentResposeWrapper) response;
 
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(now);
-        String uid = baseController.getUserId();
         String action = request.getRequestURI();
         String version = request.getHeader(BaseController.VERSION_STR);
         String jwt = request.getHeader(JWTCode.AUTHORIZATION_STR);
         String ip = IPUtils.getRealIpAddr(request);
-        String result = new String(wrapper.getContentAsByteArray());
         SysLogger.request("{} {} {} {} {} {} {} {} {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(beginTime), time, action, jwt, uid, request.getParameterMap(), version, ip, result);
     }
 }

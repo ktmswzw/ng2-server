@@ -2,7 +2,7 @@ package com.xecoder.core.entity;
 
 import com.xecoder.config.BaseEntity;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name = "security_organization_role")
@@ -21,6 +21,10 @@ public class OrganizationRole extends BaseEntity implements Serializable{
      *
      * @mbggenerated
      */
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -142,7 +146,8 @@ public class OrganizationRole extends BaseEntity implements Serializable{
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
-    
+
+    @Transient
     private Role role;
 
 	public Role getRole() {

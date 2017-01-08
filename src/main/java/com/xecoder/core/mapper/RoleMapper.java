@@ -11,6 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface RoleMapper  extends MybatisMapper<Role> {
+
     long countByExample(RoleCriteria example);
 
     int deleteByExample(RoleCriteria example);

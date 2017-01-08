@@ -11,10 +11,10 @@ public class BaseEntity implements Serializable {
     private Integer rows = 100;
 
     @Transient
-    private String sort = "";
+    private String sort ;
 
     @Transient
-    private String order = "";
+    private String order = "desc";
 
     @Transient
     private Integer sum = 0;

@@ -2,13 +2,16 @@ package com.xecoder.core.entity;
 
 import com.xecoder.config.BaseEntity;
 
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Table(name = "security_role")
 public class Role  extends BaseEntity implements Serializable {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String description;
@@ -31,10 +34,13 @@ public class Role  extends BaseEntity implements Serializable {
         this.description = description == null ? null : description.trim();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
-
     @Transient
     private List<RolePermission> rolePermissions;
 
@@ -46,8 +52,5 @@ public class Role  extends BaseEntity implements Serializable {
         this.rolePermissions = rolePermissions;
     }
 
-    public String getName() {
-        return name;
-    }
 
 }

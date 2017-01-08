@@ -7,23 +7,23 @@ import java.io.Serializable;
 
 @Table(name = "security_permission")
 public class Permission extends BaseEntity implements Serializable{
-    /** 
-	 * @description: 
+    /**
+	 * @description:
 	 * @version 1.0
 	 * @author ZHEJIANG RUIZHENG
 	 * @createDate 2014-1-19;下午10:50:26
 	 */
 	private static final long serialVersionUID = -4929576921462366464L;
-	
+
 	// 用于菜单显示
 	public final static String PERMISSION_SHOW = "show";
-	
+
 	public final static String PERMISSION_CREATE = "save";
-	
+
 	public final static String PERMISSION_READ = "view";
-	
+
 	public final static String PERMISSION_UPDATE = "edit";
-	
+
 	public final static String PERMISSION_DELETE = "delete";
 
 	/**
@@ -189,7 +189,8 @@ public class Permission extends BaseEntity implements Serializable{
     public void setModuleId(Long moduleId) {
         this.moduleId = moduleId;
     }
-    
+
+    @Transient
     private Module module;
 
 	public Module getModule() {
@@ -199,5 +200,5 @@ public class Permission extends BaseEntity implements Serializable{
 	public void setModule(Module module) {
 		this.module = module;
 	}
-    
+
 }

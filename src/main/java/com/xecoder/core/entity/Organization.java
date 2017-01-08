@@ -2,7 +2,7 @@ package com.xecoder.core.entity;
 
 import com.xecoder.config.BaseEntity;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,6 +22,10 @@ public class Organization extends BaseEntity implements Serializable{
      *
      * @mbggenerated
      */
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -143,8 +147,11 @@ public class Organization extends BaseEntity implements Serializable{
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
-    
+
+    @Transient
     private Organization parent;
+
+    @Transient
     private List<Organization> children;
 
 	public List<Organization> getChildren() {

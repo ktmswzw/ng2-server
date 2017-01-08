@@ -3,6 +3,7 @@ package com.xecoder.core.entity;
 import com.xecoder.config.BaseEntity;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 @Table(name = "security_user_role")
@@ -142,7 +143,8 @@ public class UserRole extends BaseEntity implements Serializable{
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-    
+
+    @Transient
     private Role role;
 
 	public Role getRole() {
