@@ -8,13 +8,12 @@ import org.slf4j.MarkerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.core.GenericTypeResolver.resolveTypeArguments;
 
-public abstract class SysAbstractRestExceptionHandler<E extends Exception, T> extends ResponseEntityExceptionHandler implements RestExceptionHandler<E, T> {
+public abstract class SysAbstractRestExceptionHandler<E extends Exception, T> implements RestExceptionHandler<E, T> {
     private static final Logger LOG = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     private final Class<E> exceptionClass;

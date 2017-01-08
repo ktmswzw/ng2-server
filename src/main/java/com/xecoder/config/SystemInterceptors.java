@@ -13,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -32,6 +33,12 @@ public class SystemInterceptors extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         super.configureMessageConverters(converters);
         converters.add(new RestJackson2HttpMessageConverter());
+    }
+
+    @Override
+    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
+        // Turn off suffix-based content negotiation
+        configurer.favorPathExtension(false);
     }
 
     @Resource
@@ -66,6 +73,6 @@ public class SystemInterceptors extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor()).addPathPatterns("/api/**");//认证
-        registry.addInterceptor(logInterceptor()).addPathPatterns("/**");//日志
+        registry.addInterceptor(logInterceptor()).addPathPatterns("/api/**");//日志
     }
 }

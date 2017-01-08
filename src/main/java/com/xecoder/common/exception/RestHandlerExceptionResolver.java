@@ -50,12 +50,12 @@ import static org.springframework.web.servlet.HandlerMapping.PRODUCIBLE_MEDIA_TY
 
 /**
  * A {@link org.springframework.web.servlet.HandlerExceptionResolver HandlerExceptionResolver}
- * for RESTful APIs that resolves exceptions through the provided {@link cz.jirutka.spring.exhandler.handlers.RestExceptionHandler
+ * for RESTful APIs that resolves exceptions through the provided {@link RestExceptionHandler
  * RestExceptionHandlers}.
  *
  * @see #builder()
- * @see cz.jirutka.spring.exhandler.RestHandlerExceptionResolverBuilder
- * @see cz.jirutka.spring.exhandler.RestHandlerExceptionResolverFactoryBean
+ * @see RestHandlerExceptionResolverBuilder
+ * @see RestHandlerExceptionResolverFactoryBean
  */
 public class RestHandlerExceptionResolver extends AbstractHandlerExceptionResolver implements InitializingBean {
 
@@ -89,7 +89,7 @@ public class RestHandlerExceptionResolver extends AbstractHandlerExceptionResolv
     public RestHandlerExceptionResolver() {
 
         Method method = ClassUtils.getMethod(
-            RestExceptionHandler.class, "handleException", Exception.class, HttpServletRequest.class);
+                RestExceptionHandler.class, "handleException", Exception.class, HttpServletRequest.class);
 
         returnTypeMethodParam = new MethodParameter(method, -1);
         // This method caches the resolved value, so it's convenient to initialize it
@@ -117,13 +117,13 @@ public class RestHandlerExceptionResolver extends AbstractHandlerExceptionResolv
         try {
             entity = handleException(exception, request);
         } catch (NoExceptionHandlerFoundException ex) {
-            LOG.warn("No exception handler found to handle exception: {}", exception.getClass().getName());
+            //LOG.warn("No exception handler found to handle exception: {}", exception.getClass().getName());
             return null;
         }
         try {
             processResponse(entity, new ServletWebRequest(request, response));
         } catch (Exception ex) {
-            LOG.error("Failed to process error response: {}", entity, ex);
+            //LOG.error("Failed to process error response: {}", entity, ex);
             return null;
         }
         return new ModelAndView();
@@ -161,7 +161,7 @@ public class RestHandlerExceptionResolver extends AbstractHandlerExceptionResolv
             responseProcessor.handleReturnValue(entity, methodParameter, mavContainer, webRequest);
 
         } catch (HttpMediaTypeNotAcceptableException ex) {
-            LOG.debug("Requested media type is not supported, falling back to default one");
+            //LOG.debug("Requested media type is not supported, falling back to default one");
             fallbackResponseProcessor.handleReturnValue(entity, methodParameter, mavContainer, webRequest);
         }
     }
