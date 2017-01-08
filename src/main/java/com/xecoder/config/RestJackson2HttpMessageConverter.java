@@ -8,6 +8,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJacksonValue;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 
 public class RestJackson2HttpMessageConverter extends AbstractJackson2HttpMessageConverter {
 
@@ -22,7 +23,10 @@ public class RestJackson2HttpMessageConverter extends AbstractJackson2HttpMessag
 
     @Override
     protected void writePrefix(JsonGenerator generator, Object object) throws IOException {
-        String prefix = "{\"apistatus\":1,\"result\":";
+        int status = 1;
+        if (((LinkedHashMap) object).get("status") == null || ((LinkedHashMap) object).get("status").equals(404))
+            status = 0;
+        String prefix = "{\"apistatus\":" + status + ",\"result\":";
         generator.writeRaw(prefix);
         String jsonpFunction =
                 (object instanceof MappingJacksonValue ? ((MappingJacksonValue) object).getJsonpFunction() : null);

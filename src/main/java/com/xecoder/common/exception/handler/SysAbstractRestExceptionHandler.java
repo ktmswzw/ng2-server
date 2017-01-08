@@ -1,5 +1,7 @@
 package com.xecoder.common.exception.handler;
 
+import com.xecoder.common.exception.SysException;
+import com.xecoder.common.exception.factor.UserExcepFactor;
 import cz.jirutka.spring.exhandler.handlers.RestExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +10,12 @@ import org.slf4j.MarkerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +24,8 @@ import java.util.Map;
 
 import static org.springframework.core.GenericTypeResolver.resolveTypeArguments;
 
+@EnableWebMvc
+@ControllerAdvice
 public abstract class SysAbstractRestExceptionHandler<E extends Exception, T> extends ResponseEntityExceptionHandler implements RestExceptionHandler<E, T> {
     private static final Logger LOG = LoggerFactory.getLogger(RestExceptionHandler.class);
 
@@ -41,16 +49,26 @@ public abstract class SysAbstractRestExceptionHandler<E extends Exception, T> ex
         this.status = status;
     }
 
-
+    @ExceptionHandler(Throwable.class)
+    @ResponseBody
+    ResponseEntity<Object> handleControllerException(HttpServletRequest req, Throwable ex) {
+        SysException errorResponse = new SysException(UserExcepFactor.AUTH_FAILED,"",ex);
+        if(ex instanceof SysException) {
+            errorResponse.setFactor(((SysException)ex).getFactor());
+        }
+        if(ex instanceof SysException) {
+            return new ResponseEntity<Object>(errorResponse,((SysException)ex).getFactor().getHttpStatus());
+        } else {
+            return new ResponseEntity<Object>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Map<String,String> responseBody = new HashMap<>();
         responseBody.put("path",request.getContextPath());
         responseBody.put("message","The URL you have reached is not in service at this time (404).");
-        return new ResponseEntity<Object>(responseBody,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(responseBody,HttpStatus.OK);
     }
-    ////// Abstract methods //////
-
     public abstract T createBody(E ex, HttpServletRequest req);
 
 
