@@ -68,13 +68,23 @@ public class ModuleServiceImpl implements ModuleService {
 			cri.andIdEqualTo(module.getId());
 		}
 
-		if(StringUtils.isBlank(module.getOrder())){
+		if(StringUtils.isBlank(module.getSort())){
 			criteria.setOrderByClause("priority ASC");
 		}
 		else
-			criteria.setOrderByClause(module.getOrder()+" "+module.getSort());
+			criteria.setOrderByClause(module.getSort()+" "+module.getOrder());
 
-		return mapper.selectByExample(criteria);
+		List<Module> list = mapper.selectByExample(criteria);
+
+
+		if(list != null && list.size() > 0){
+			for(Module m:list){
+				if(m.getParentId() != null){
+					m.setParent(this.get(m.getParentId()));
+				}
+			}
+		}
+		return list;
 	}
 
     @Override
@@ -108,45 +118,51 @@ public class ModuleServiceImpl implements ModuleService {
 	@Override
 	public Module getTree() {
 		List<Module> list = find(new Module());
-		
+
 		if(list != null && list.size() > 0){
 			List<Module> rootList = makeTree(list);
-			
+
 			return rootList.get(0);
 		}
-		
+
 		return null;
 	}
-	
+
 	private List<Module> makeTree(List<Module> list) {
-		List<Module> parent = new ArrayList<>();
+		List<Module> parent = new ArrayList<Module>();
+		// get parentId = null;
 		for (Module e : list) {
 			if (e.getParent() == null) {
-				e.setChildren(new ArrayList<>(0));
+				e.setChildren(new ArrayList<Module>(0));
 				parent.add(e);
 			}
 		}
+		// 删除parentId = null;
 		list.removeAll(parent);
+
 		makeChildren(parent, list);
+
 		return parent;
 	}
-	
+
 	private void makeChildren(List<Module> parent, List<Module> children) {
 		if (children.isEmpty()) {
 			return ;
 		}
-		List<Module> tmp = new ArrayList<>();
+
+		List<Module> tmp = new ArrayList<Module>();
 		for (Module c1 : parent) {
 			for (Module c2 : children) {
-				c2.setChildren(new ArrayList<>(0));
+				c2.setChildren(new ArrayList<Module>(0));
 				if (c1.getId().equals(c2.getParent().getId())) {
 					c1.getChildren().add(c2);
 					tmp.add(c2);
 				}
 			}
 		}
+
 		children.removeAll(tmp);
-		
+
 		makeChildren(tmp, children);
 	}
 

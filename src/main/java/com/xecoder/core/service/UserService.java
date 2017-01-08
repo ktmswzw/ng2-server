@@ -1,6 +1,7 @@
 package com.xecoder.core.service;
 
 import com.xecoder.core.entity.DeviceEnum;
+import com.xecoder.core.entity.Module;
 import com.xecoder.core.entity.User;
 
 import java.util.List;
@@ -37,4 +38,6 @@ public interface UserService {
 	public User getByEmail(String email);
 
 	User login(String username, String password, DeviceEnum device,String deviceToken);
+
+	Module getMenuModule(User user);
 }

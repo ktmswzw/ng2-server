@@ -5,7 +5,7 @@ import com.xecoder.config.BaseEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "security_permission_data_control")
+@Table(name = "security_role_permission_data_control")
 public class RolePermissionDataControl extends BaseEntity implements Serializable{
     /** 
 	 * @description: 

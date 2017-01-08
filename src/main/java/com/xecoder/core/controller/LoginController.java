@@ -35,6 +35,7 @@ public class LoginController extends BaseController {
         object.put("token",user.getToken());
         object.put("organization",user.getOrganization().getName());
         object.put("organization_id",user.getOrganization().getId());
+        object.put("module_tree",userService.getMenuModule(user));
         return object;
     }
 

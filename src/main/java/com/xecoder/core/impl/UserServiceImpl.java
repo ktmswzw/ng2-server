@@ -1,5 +1,6 @@
 package com.xecoder.core.impl;
 
+import com.google.common.collect.Lists;
 import com.xecoder.common.exception.SysException;
 import com.xecoder.common.exception.factor.UserExcepFactor;
 import com.xecoder.common.utils.HashPassword;
@@ -30,9 +31,14 @@ public class UserServiceImpl implements UserService {
     private RoleService roleService;
 
     @Autowired
+    private ModuleService moduleService;
+
+    @Autowired
     private OrganizationService organizationService;
+
     @Autowired
     private OrganizationRoleService organizationRoleService;
+
     @Autowired
     private UserMapper userMapper;
 
@@ -159,7 +165,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password, DeviceEnum device,String deviceToken) {
+    public User login(String username, String password, DeviceEnum device, String deviceToken) {
         User user = getByUsername(username);
 
         if (user == null) {
@@ -304,4 +310,106 @@ public class UserServiceImpl implements UserService {
         return id == 1;
     }
 
+
+    private AuthorizationInfo authorizationInfo(User user) {
+        Collection<String> hasPermissions;
+        Collection<String> hasRoles;
+
+        List<UserRole> userRoles = userRoleService.find(user.getId());
+        List<OrganizationRole> organizationRoles = new ArrayList<>();
+        if (user.getOrganization() != null) {
+            organizationRoles = organizationRoleService.find(user.getOrgId());
+        }
+        Collection<Role> roles = getUserRoles(userRoles, organizationRoles);
+        hasRoles = makeRoles(roles);
+        hasPermissions = makePermissions(roles);
+
+
+        AuthorizationInfo info = new AuthorizationInfo();
+        info.setHasRoles(hasRoles);
+        info.setHasPermissions(hasPermissions);
+
+        return info;
+    }
+
+    private Collection<String> makeRoles(Collection<Role> roles) {
+        Collection<String> hasRoles = new HashSet<String>();
+        for (Role role : roles) {
+            hasRoles.add(role.getName());
+        }
+        return hasRoles;
+    }
+
+    private Collection<String> makePermissions(Collection<Role> roles) {
+
+        Collection<String> stringPermissions = new ArrayList<String>();
+        for (Role role : roles) {
+            List<RolePermission> rolePermissions = role.getRolePermissions();
+            for (RolePermission rolePermission : rolePermissions) {
+                Permission permission = rolePermission.getPermission();
+
+                String resource = permission.getModule().getSn();
+                String operate = permission.getShortName();
+
+                StringBuilder builder = new StringBuilder();
+                System.out.println("resource = operate ---" + resource + "--------------" + operate);
+                builder.append(resource + ":" + operate);
+                StringBuilder dcBuilder = new StringBuilder();
+                for (RolePermissionDataControl rpdc : rolePermission.getRolePermissionDataControls()) {
+                    DataControl dataControl = rpdc.getDataControl();
+                    dcBuilder.append(dataControl.getName() + ",");
+                }
+                if (dcBuilder.length() > 0) {
+                    builder.append(":" + dcBuilder.substring(0, dcBuilder.length() - 1));
+                }
+                stringPermissions.add(builder.toString());
+            }
+        }
+        return stringPermissions;
+    }
+
+    private Collection<Role> getUserRoles(List<UserRole> userRoles, List<OrganizationRole> organizationRoles) {
+        Set<Role> roles = new HashSet<Role>();
+        for (UserRole userRole : userRoles) {
+            roles.add(userRole.getRole());
+        }
+        for (OrganizationRole organizationRole : organizationRoles) {
+            roles.add(organizationRole.getRole());
+        }
+
+        return roles;
+    }
+
+
+    public Module getMenuModule(User user) {
+
+        Module rootModule = moduleService.getTree();
+
+        if (rootModule != null) {
+            check(rootModule, this.authorizationInfo(user),isSupervisor(user.getId()));
+        } else {
+            rootModule = new Module();
+        }
+
+        return rootModule;
+    }
+
+
+    private void check(Module module, AuthorizationInfo authorizationInfo,boolean isSupser) {
+        List<Module> list1 = Lists.newArrayList();
+        for (Module m1 : module.getChildren()) {
+            // 只加入拥有view权限的Module
+            if(!isSupser) {
+                for (String temp : authorizationInfo.getHasPermissions())
+                    if (StringUtils.contains(temp, m1.getSn() + ":" + Permission.PERMISSION_SHOW)) {
+                        check(m1, authorizationInfo,isSupser);
+                        list1.add(m1);
+                    }
+            }else
+            {
+                list1.add(m1);
+            }
+        }
+        module.setChildren(list1);
+    }
 }
