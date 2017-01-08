@@ -9,6 +9,8 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +31,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @EnableConfigurationProperties({ServiceConfig.class, UserData.class})
 public abstract class BaseTest {
 
+
+    private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
     @Autowired
     public ServiceConfig serviceConfig;//服务配置
 
@@ -38,7 +42,6 @@ public abstract class BaseTest {
     public String service;//服务地址
 
     protected String TOKEN = "";
-    protected String userId = "";
     /**
      * 测试前配置
      * @throws Exception
@@ -46,7 +49,7 @@ public abstract class BaseTest {
     @Before
     public void setUp() throws Exception {
         service = serviceConfig.getUrl() + ":" + serviceConfig.getPort();
-        System.out.println("service = " + service);
+        logger.debug("service = " + service);
         getToken();
     }
 
@@ -87,16 +90,14 @@ public abstract class BaseTest {
     private void getToken() {
 
         MultivaluedMap<String, String> param = new MultivaluedMapImpl();
-        param.add("telephone", userData.getUsername());
+        param.add("username", userData.getUsername());
         param.add("password", userData.getPassword());
         param.add("device", userData.getDevice());
-        param.add("deviceToken", userData.getDeviceToken());
         String output = post("/login", param);
-        System.out.println("output = " + output);
+        logger.debug("output = " + output);
         JSONObject json = JSON.parseObject(output);
         JSONObject o = (JSONObject) json.get("result");
-        TOKEN = String.valueOf(o.get("jwt"));
-        userId = String.valueOf(o.get("user_id"));
+        TOKEN = String.valueOf(o.get("token"));
         assertThat(output.contains("nickname")).isTrue();
 
     }

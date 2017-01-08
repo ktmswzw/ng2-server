@@ -8,12 +8,17 @@ import org.slf4j.MarkerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.core.GenericTypeResolver.resolveTypeArguments;
 
-public abstract class SysAbstractRestExceptionHandler<E extends Exception, T> implements RestExceptionHandler<E, T> {
+public abstract class SysAbstractRestExceptionHandler<E extends Exception, T> extends ResponseEntityExceptionHandler implements RestExceptionHandler<E, T> {
     private static final Logger LOG = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     private final Class<E> exceptionClass;
@@ -37,6 +42,13 @@ public abstract class SysAbstractRestExceptionHandler<E extends Exception, T> im
     }
 
 
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        Map<String,String> responseBody = new HashMap<>();
+        responseBody.put("path",request.getContextPath());
+        responseBody.put("message","The URL you have reached is not in service at this time (404).");
+        return new ResponseEntity<Object>(responseBody,HttpStatus.NOT_FOUND);
+    }
     ////// Abstract methods //////
 
     public abstract T createBody(E ex, HttpServletRequest req);

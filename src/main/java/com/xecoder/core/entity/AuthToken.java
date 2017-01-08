@@ -2,6 +2,8 @@ package com.xecoder.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xecoder.common.utils.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +17,8 @@ import java.util.HashMap;
  */
 
 public class AuthToken extends BaseBean implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthToken.class);
 
     private static final long serialVersionUID = -3373371149561708376L;
     /**
@@ -67,7 +71,7 @@ public class AuthToken extends BaseBean implements Serializable {
         claims.put("iss","xecoder.com");
         claims.put("exp",(System.currentTimeMillis() + this.EXPIRED_TIME )/ 1000L);
         String jwt = JWTCode.SIGNER.sign(claims);
-        System.out.println("jwt = " + jwt);
+        logger.debug("jwt = " + jwt);
         return jwt;
     }
 

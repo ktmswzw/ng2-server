@@ -9,16 +9,16 @@ import cz.jirutka.spring.exhandler.RestHandlerExceptionResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -29,25 +29,23 @@ import java.util.List;
 @EnableWebMvc
 public class SystemInterceptors extends WebMvcConfigurerAdapter {
 
+    @Bean  // Magic entry
+    public DispatcherServlet dispatcherServlet() {
+        DispatcherServlet ds = new DispatcherServlet();
+        ds.setThrowExceptionIfNoHandlerFound(true);
+        return ds;
+    }
+
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         super.configureMessageConverters(converters);
         converters.add(new RestJackson2HttpMessageConverter());
     }
 
-    @Override
-    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
-        // Turn off suffix-based content negotiation
-        configurer.favorPathExtension(false);
-    }
-
-    @Resource
-    private MessageSource messageSource;
-
     @Bean
     public RestHandlerExceptionResolver restExceptionResolver() {
         return RestHandlerExceptionResolver.builder()
-                .messageSource(messageSource)
+                .messageSource(httpErrorMessageSource())
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .addErrorMessageHandler(EmptyResultDataAccessException.class, HttpStatus.NOT_FOUND)
                 .addHandler(SysException.class, new SysRestExceptionHandler<>(SysException.class,HttpStatus.ACCEPTED))
@@ -57,6 +55,14 @@ public class SystemInterceptors extends WebMvcConfigurerAdapter {
     @Bean
     public AuthInterceptor authInterceptor() {
         return new AuthInterceptor();
+    }
+
+    @Bean
+    public MessageSource httpErrorMessageSource() {
+        ReloadableResourceBundleMessageSource m = new ReloadableResourceBundleMessageSource();
+        m.setBasename("classpath:messages");
+        m.setDefaultEncoding("UTF-8");
+        return m;
     }
 
 

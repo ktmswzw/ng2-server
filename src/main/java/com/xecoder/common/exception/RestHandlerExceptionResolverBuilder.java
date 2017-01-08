@@ -223,6 +223,7 @@ public class RestHandlerExceptionResolverBuilder {
         }
     }
 
+    @SuppressWarnings(value={"deprecation"})
     private Map<Class, RestExceptionHandler> getDefaultHandlers() {
 
         Map<Class, RestExceptionHandler> map = new HashMap<>();

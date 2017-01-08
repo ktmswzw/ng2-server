@@ -352,7 +352,7 @@ public class UserServiceImpl implements UserService {
                 String operate = permission.getShortName();
 
                 StringBuilder builder = new StringBuilder();
-                System.out.println("resource = operate ---" + resource + "--------------" + operate);
+                logger.debug("resource = operate ---" + resource + "--------------" + operate);
                 builder.append(resource + ":" + operate);
                 StringBuilder dcBuilder = new StringBuilder();
                 for (RolePermissionDataControl rpdc : rolePermission.getRolePermissionDataControls()) {

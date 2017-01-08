@@ -15,7 +15,7 @@ public class SimpleDate
 {
     public static void main(String[] args)
     {
-        System.out.println(SimpleDate.format(SimpleDate.getDayStart(new Date(), 1), DATE_PATTEN_TM_1));
+        System.out.print(SimpleDate.format(SimpleDate.getDayStart(new Date(), 1), DATE_PATTEN_TM_1));
     }
 
     public static String DATE_PATTEN = "yyyy-MM-dd";
