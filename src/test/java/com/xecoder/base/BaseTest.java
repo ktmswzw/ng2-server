@@ -47,7 +47,7 @@ public abstract class BaseTest {
     public void setUp() throws Exception {
         service = serviceConfig.getUrl() + ":" + serviceConfig.getPort();
         System.out.println("service = " + service);
- //       getToken();
+        getToken();
     }
 
 
@@ -72,7 +72,7 @@ public abstract class BaseTest {
         WebResource webResource = client.resource(service).path("/api"+path);
         ClientResponse response = webResource.queryParams(param)
                 .header("CLIENT-VERSION", userData.getClientVsersion())
-                .header("HABIT-TOKEN", TOKEN).type(MediaType.APPLICATION_FORM_URLENCODED)
+                .header("Authorization", TOKEN).type(MediaType.APPLICATION_FORM_URLENCODED)
                 .post(ClientResponse.class);
         if (response.getStatus() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "
@@ -95,7 +95,7 @@ public abstract class BaseTest {
         System.out.println("output = " + output);
         JSONObject json = JSON.parseObject(output);
         JSONObject o = (JSONObject) json.get("result");
-        TOKEN = String.valueOf(o.get("token"));
+        TOKEN = String.valueOf(o.get("jwt"));
         userId = String.valueOf(o.get("user_id"));
         assertThat(output.contains("nickname")).isTrue();
 

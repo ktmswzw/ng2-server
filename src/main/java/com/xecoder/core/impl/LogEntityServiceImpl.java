@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("logEntityService")
+@Service
 @Transactional
 @SuppressWarnings("unchecked")
 public class LogEntityServiceImpl implements LogEntityService {

@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("userRoleService")@Transactional
+@Service
+@Transactional
 @SuppressWarnings("unchecked")
 public class UserRoleServiceImpl implements UserRoleService {
 

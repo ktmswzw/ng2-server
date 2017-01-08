@@ -3,20 +3,12 @@ package com.xecoder.config;
 import com.xecoder.common.utils.BaseBean;
 import com.xecoder.common.utils.DeviceType;
 import com.xecoder.common.utils.JWTCode;
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by  moxz
@@ -27,7 +19,6 @@ import java.util.TreeMap;
 @ControllerAdvice
 public class BaseController {
 
-    public static String TOKEN_STR = "token";
     public static String USERID_STR = "userId";
     private static String SEPARATOR = "-";
     public static String VERSION_STR = "CLIENT-VERSION";
@@ -38,9 +29,6 @@ public class BaseController {
     private String jwt;
     public BaseBean baseBean;
 
-
-    @Autowired
-    public MessageSource messageSource;
 
     /**
      * 应用版本号
@@ -53,12 +41,15 @@ public class BaseController {
 
     private DeviceType deviceType;
 
+    private String version_str;
+
     @ModelAttribute
     public void setReqAndRes(HttpServletRequest request, HttpServletResponse response){
         this.request = request;
         this.response = response;
         this.session = request.getSession();
         this.jwt = request.getHeader(JWTCode.AUTHORIZATION_STR);
+        this.version_str = request.getHeader(VERSION_STR);
     }
 
 
@@ -71,59 +62,6 @@ public class BaseController {
                 this.version = strs[2];
             }
         }
-    }
-
-
-    protected String getLocalException(String errorKey)
-    {
-        return this.messageSource.getMessage(errorKey,null, Locale.getDefault());
-    }
-
-    /**
-     * 将HTTP请求参数映射到bean对象中
-     * @param beanClass
-     * @return
-     * @throws Exception
-     */
-    public <T> T form(Class<T> beanClass) {
-        try{
-            T bean = beanClass.newInstance();
-            BeanUtils.populate(bean, getParametersStartingWith(request,"1"));
-            return bean;
-        }catch(Exception e) {
-            e.printStackTrace();
-            //throw new ActionException(e.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * 取得带相同前缀的Request Parameters, copy from spring WebUtils.
-     *
-     * 返回的结果的Parameter名已去除前缀.
-     */
-    @SuppressWarnings("rawtypes")
-    public static Map<String, Object> getParametersStartingWith(ServletRequest request, String prefix) {
-        Enumeration paramNames = request.getParameterNames();
-        Map<String, Object> params = new TreeMap<String, Object>();
-        if (prefix == null) {
-            prefix = "";
-        }
-        while ((paramNames != null) && paramNames.hasMoreElements()) {
-            String paramName = (String) paramNames.nextElement();
-            if ("".equals(prefix) || paramName.startsWith(prefix)) {
-                String unprefixed = paramName.substring(prefix.length());
-                String[] values = request.getParameterValues(paramName);
-                if ((values == null) || (values.length == 0)) {
-                    // Do nothing, no values found at all.
-                } else if (values.length > 1) {
-                    params.put(unprefixed, values);
-                } else {
-                    params.put(unprefixed, values[0]);
-                }
-            }
-        }
-        return params;
     }
 
     public String getUserId() {
@@ -140,14 +78,6 @@ public class BaseController {
 
     public static void setVersionStr(String versionStr) {
         VERSION_STR = versionStr;
-    }
-
-    public static String getTokenStr() {
-        return TOKEN_STR;
-    }
-
-    public static void setTokenStr(String tokenStr) {
-        TOKEN_STR = tokenStr;
     }
 
     public String getVersion() {
@@ -196,5 +126,13 @@ public class BaseController {
 
     public void setBaseBean(BaseBean baseBean) {
         this.baseBean = baseBean;
+    }
+
+    public String getVersion_str() {
+        return version_str;
+    }
+
+    public void setVersion_str(String version_str) {
+        this.version_str = version_str;
     }
 }

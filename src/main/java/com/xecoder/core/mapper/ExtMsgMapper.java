@@ -3,14 +3,13 @@ package com.xecoder.core.mapper;
 import com.xecoder.config.MybatisMapper;
 import com.xecoder.core.entity.ExtMsg;
 import com.xecoder.core.entity.ExtMsgCriteria;
-import com.xecoder.core.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
-public interface ExtMsgMapper extends MybatisMapper<User> {
+public interface ExtMsgMapper extends MybatisMapper<ExtMsg> {
     int countByExample(ExtMsgCriteria example);
 
     int deleteByExample(ExtMsgCriteria example);

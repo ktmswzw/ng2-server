@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("resetService")
+@Service
 @Transactional
 @SuppressWarnings("unchecked")
 public class ResetServiceImpl implements ResetService{

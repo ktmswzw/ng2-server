@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("organizationService")
+@Service
 @Transactional
 @SuppressWarnings("unchecked")
 public class OrganizationServiceImpl implements OrganizationService {

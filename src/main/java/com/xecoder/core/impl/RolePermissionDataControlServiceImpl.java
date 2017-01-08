@@ -14,7 +14,7 @@ import java.util.List;
 
 @Transactional
 @SuppressWarnings("unchecked")
-@Service("rolePermissionDataControlService")
+@Service
 public class RolePermissionDataControlServiceImpl implements
         RolePermissionDataControlService {
 

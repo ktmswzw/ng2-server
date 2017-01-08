@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("moduleService")
+@Service
 @SuppressWarnings("unchecked")
 @Transactional
 public class ModuleServiceImpl implements ModuleService {

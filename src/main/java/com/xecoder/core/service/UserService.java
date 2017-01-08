@@ -36,5 +36,5 @@ public interface UserService {
 
 	public User getByEmail(String email);
 
-	User login(String username, String password, DeviceEnum device);
+	User login(String username, String password, DeviceEnum device,String deviceToken);
 }

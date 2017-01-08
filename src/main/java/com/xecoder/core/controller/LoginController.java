@@ -1,8 +1,8 @@
 package com.xecoder.core.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xecoder.common.utils.DeviceType;
 import com.xecoder.config.BaseController;
+import com.xecoder.config.NonAuthoritative;
 import com.xecoder.core.entity.DeviceEnum;
 import com.xecoder.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,10 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value="/login")
     @ResponseBody
-    public JSONObject login(@RequestParam String username,@RequestParam String password){
+    @NonAuthoritative
+    public JSONObject login(@RequestParam String username,@RequestParam String password, @RequestParam DeviceEnum device, @RequestParam(defaultValue = "") String deviceToken){
         JSONObject object = new JSONObject();
-        object.put("user",userService.login(username,password,this.getDeviceType().equals(DeviceType.OTHER)? DeviceEnum.WEB:DeviceEnum.APP));
+        object.put("user",userService.login(username,password,device,deviceToken));
         return object;
     }
 

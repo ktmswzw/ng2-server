@@ -2,6 +2,7 @@ package com.xecoder.common.interceptor;
 
 import com.xecoder.common.exception.SysLogger;
 import com.xecoder.common.utils.IPUtils;
+import com.xecoder.common.utils.JWTCode;
 import com.xecoder.config.BaseController;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -37,9 +38,9 @@ public class LogInterceptor implements HandlerInterceptor {
         String uid = baseController.getUserId();
         String action = request.getRequestURI();
         String version = request.getHeader(BaseController.VERSION_STR);
-        String token = request.getHeader(BaseController.TOKEN_STR);
+        String jwt = request.getHeader(JWTCode.AUTHORIZATION_STR);
         String ip = IPUtils.getRealIpAddr(request);
         String result = new String(wrapper.getContentAsByteArray());
-        SysLogger.request("{} {} {} {} {} {} {} {} {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(beginTime), time, action, token, uid, request.getParameterMap(), version, ip, result);
+        SysLogger.request("{} {} {} {} {} {} {} {} {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(beginTime), time, action, jwt, uid, request.getParameterMap(), version, ip, result);
     }
 }

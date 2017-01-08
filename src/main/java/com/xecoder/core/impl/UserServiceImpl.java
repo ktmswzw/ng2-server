@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("userService")
+@Service
 @Transactional
 @SuppressWarnings("unchecked")
 public class UserServiceImpl implements UserService {
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password, DeviceEnum device) {
+    public User login(String username, String password, DeviceEnum device,String deviceToken) {
         User user = getByUsername(username);
 
         if (user == null) {

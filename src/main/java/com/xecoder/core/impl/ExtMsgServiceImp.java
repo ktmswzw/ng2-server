@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("extMsgService")
+@Service
 @Transactional
 @SuppressWarnings("unchecked")
 public class ExtMsgServiceImp implements ExtMsgService {

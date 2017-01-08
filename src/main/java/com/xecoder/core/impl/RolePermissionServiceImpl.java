@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("rolePermissionService")
+@Service
 @Transactional
 @SuppressWarnings("unchecked")
 public class RolePermissionServiceImpl implements RolePermissionService {

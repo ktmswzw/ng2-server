@@ -2,7 +2,6 @@ package com.xecoder.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xecoder.common.utils.*;
-import com.xecoder.config.BaseController;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -65,7 +64,6 @@ public class AuthToken extends BaseBean implements Serializable {
         //JWT http://blog.leapoahead.com/2015/09/06/understanding-jwt/
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
-        claims.put(BaseController.TOKEN_STR,token);
         claims.put("iss","xecoder.com");
         claims.put("exp",(System.currentTimeMillis() + this.EXPIRED_TIME )/ 1000L);
         String jwt = JWTCode.SIGNER.sign(claims);

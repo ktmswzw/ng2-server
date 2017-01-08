@@ -2,7 +2,7 @@ package com.xecoder.core.entity;
 
 import com.xecoder.config.BaseEntity;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name = "security_permission")
@@ -32,6 +32,10 @@ public class Permission extends BaseEntity implements Serializable{
      *
      * @mbggenerated
      */
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
