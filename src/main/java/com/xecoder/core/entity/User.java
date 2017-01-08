@@ -41,6 +41,12 @@ public class User extends BaseEntity implements Serializable {
 
     private Long orgId;
 
+    private String avatar;
+
+    @Transient
+    private String JWTToken;
+
+
     public Long getId() {
         return id;
     }
@@ -176,5 +182,19 @@ public class User extends BaseEntity implements Serializable {
         this.roles = roles;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getJWTToken() {
+        return JWTToken;
+    }
+
+    public void setJWTToken(String JWTToken) {
+        this.JWTToken = JWTToken;
+    }
 }

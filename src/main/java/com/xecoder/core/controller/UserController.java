@@ -27,4 +27,6 @@ public class UserController extends BaseController {
         object.put("list",userService.find(user));
         return object;
     }
+
+
 }

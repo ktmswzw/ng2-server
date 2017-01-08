@@ -1,14 +1,16 @@
 package com.xecoder.core.mapper;
 
+import com.xecoder.config.MybatisMapper;
 import com.xecoder.core.entity.Reset;
 import com.xecoder.core.entity.ResetCriteria;
+import com.xecoder.core.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface ResetMapper {
+@Mapper
+public interface ResetMapper extends MybatisMapper<User> {
     int countByExample(ResetCriteria example);
 
     int deleteByExample(ResetCriteria example);

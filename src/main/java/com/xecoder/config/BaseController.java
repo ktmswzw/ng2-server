@@ -34,7 +34,6 @@ public class BaseController {
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected HttpSession session;
-    private String token;
     private String userId;
     private String jwt;
     public BaseBean baseBean;
@@ -59,7 +58,6 @@ public class BaseController {
         this.request = request;
         this.response = response;
         this.session = request.getSession();
-        this.token = request.getHeader(BaseController.TOKEN_STR);
         this.jwt = request.getHeader(JWTCode.AUTHORIZATION_STR);
     }
 
@@ -126,14 +124,6 @@ public class BaseController {
             }
         }
         return params;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getUserId() {
