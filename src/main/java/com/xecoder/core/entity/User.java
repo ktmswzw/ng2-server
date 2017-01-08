@@ -44,7 +44,7 @@ public class User extends BaseEntity implements Serializable {
     private String avatar;
 
     @Transient
-    private String JWTToken;
+    private String token;
 
 
     public Long getId() {
@@ -190,11 +190,11 @@ public class User extends BaseEntity implements Serializable {
         this.avatar = avatar;
     }
 
-    public String getJWTToken() {
-        return JWTToken;
+    public String getToken() {
+        return token;
     }
 
-    public void setJWTToken(String JWTToken) {
-        this.JWTToken = JWTToken;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

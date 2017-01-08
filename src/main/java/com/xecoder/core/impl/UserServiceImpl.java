@@ -7,10 +7,7 @@ import com.xecoder.common.utils.RandomUtils;
 import com.xecoder.common.utils.SimpleDate;
 import com.xecoder.core.entity.*;
 import com.xecoder.core.mapper.UserMapper;
-import com.xecoder.core.service.ExtMsgService;
-import com.xecoder.core.service.OrganizationService;
-import com.xecoder.core.service.UserRoleService;
-import com.xecoder.core.service.UserService;
+import com.xecoder.core.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -29,12 +26,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRoleService userRoleService;
-
     @Autowired
-    private ExtMsgService extMsgService;
+    private RoleService roleService;
 
     @Autowired
     private OrganizationService organizationService;
+    @Autowired
+    private OrganizationRoleService organizationRoleService;
     @Autowired
     private UserMapper userMapper;
 
@@ -178,7 +176,7 @@ public class UserServiceImpl implements UserService {
 
         AuthToken loginToken = new AuthToken(user, device);//重新生成
         user.setAvatar(user.getAvatar());
-        user.setJWTToken(loginToken.getJwt());
+        user.setToken(loginToken.getJwt());
         return user;
 
     }
