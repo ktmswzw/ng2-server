@@ -32,7 +32,7 @@ import java.util.Map;
 import static java.util.Collections.emptyMap;
 
 @Component
-@ConfigurationProperties(locations = "classpath:messages_zh_CN.properties")
+@ConfigurationProperties(locations = "classpath:messages.properties")
 public class RestHandlerExceptionResolverFactoryBean implements FactoryBean<RestHandlerExceptionResolver> {
 
     /**

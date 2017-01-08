@@ -1,5 +1,6 @@
 package com.xecoder.core.service;
 
+import com.xecoder.common.exception.SysException;
 import com.xecoder.core.entity.DeviceEnum;
 import com.xecoder.core.entity.Module;
 import com.xecoder.core.entity.User;
@@ -37,7 +38,7 @@ public interface UserService {
 
 	public User getByEmail(String email);
 
-	User login(String username, String password, DeviceEnum device,String deviceToken);
+	User login(String username, String password, DeviceEnum device,String deviceToken) throws SysException;
 
 	Module getMenuModule(User user);
 }

@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password, DeviceEnum device, String deviceToken) {
+    public User login(String username, String password, DeviceEnum device, String deviceToken) throws SysException {
         User user = getByUsername(username);
 
         if (user == null) {

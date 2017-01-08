@@ -22,4 +22,11 @@ public class ExcepFactor {
         return httpStatus;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
 }

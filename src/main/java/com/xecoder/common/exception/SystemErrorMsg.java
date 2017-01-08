@@ -1,15 +1,9 @@
 package com.xecoder.common.exception;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.http.HttpStatus;
 
-import java.io.Serializable;
-
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class SystemErrorMsg implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class SystemErrorMsg{
 
     private Integer apistatus;
 
@@ -61,12 +55,10 @@ public class SystemErrorMsg implements Serializable{
         this.errorEn = errorEn;
     }
 
-    @JsonProperty
     public void setStatus(Integer status) {
         this.status = status;
     }
 
-    @JsonIgnore
     public void setStatus(HttpStatus status) {
         this.status = status.value();
     }
@@ -77,5 +69,9 @@ public class SystemErrorMsg implements Serializable{
 
     public void setErrorCode(String errorCode) {
         this.errorCode = errorCode;
+    }
+
+    public void setApistatus(Integer apistatus) {
+        this.apistatus = apistatus;
     }
 }
