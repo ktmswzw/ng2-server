@@ -1,5 +1,6 @@
 package com.xecoder.common.exception.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xecoder.common.exception.SysException;
 import com.xecoder.common.exception.SystemErrorMsg;
 import cz.jirutka.spring.exhandler.interpolators.MessageInterpolator;
@@ -26,7 +27,6 @@ public class SysRestExceptionHandler<E extends Exception> extends SysAbstractRes
             DEFAULT_PREFIX = "default",
             ERROR_MSG = "error",
             ERROR_MSG_EN = "error_en",
-            DEFAULT_PATH = "path",
             ERROR_CODE = "error_code";
 
     private MessageSource messageSource;
@@ -46,16 +46,18 @@ public class SysRestExceptionHandler<E extends Exception> extends SysAbstractRes
 
         SystemErrorMsg m = new SystemErrorMsg();
 
-        if (ex instanceof SysException) {
-            m.setStatus(((SysException) ex).getFactor().getHttpStatus());
-        } else {
-            m.setStatus(getStatus());
-        }
-        m.setError(resolveMessage(ERROR_MSG, ex, req));
-        m.setErrorEn(resolveMessage(ERROR_MSG_EN, ex, req));
-        m.setPath(req.getRequestURI());
-        m.setErrorCode(resolveMessage(ERROR_CODE, ex, req));
+        JSONObject result = new JSONObject();
 
+        if (ex instanceof SysException) {
+            result.put("status",((SysException) ex).getFactor().getHttpStatus());
+        } else {
+            result.put("status",getStatus());
+        }
+        result.put("error",(resolveMessage(ERROR_MSG, ex, req)));
+        result.put("error_en",(resolveMessage(ERROR_MSG_EN, ex, req)));
+        result.put("path",(req.getRequestURI()));
+        result.put("error_code",(resolveMessage(ERROR_CODE, ex, req)));
+        m.setResult(result);
         return m;
     }
 

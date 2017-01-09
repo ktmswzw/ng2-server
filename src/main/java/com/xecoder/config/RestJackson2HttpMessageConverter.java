@@ -23,9 +23,13 @@ public class RestJackson2HttpMessageConverter extends AbstractJackson2HttpMessag
 
     @Override
     protected void writePrefix(JsonGenerator generator, Object object) throws IOException {
-        int status = 1;
-        if (((LinkedHashMap) object).get("status") == null || ((LinkedHashMap) object).get("status").equals(404))
+        int status = 0;
+        try {
+            if (object instanceof LinkedHashMap)
+                status = 1;
+        } catch (Exception e) {
             status = 0;
+        }
         String prefix = "{\"apistatus\":" + status + ",\"result\":";
         generator.writeRaw(prefix);
         String jsonpFunction =

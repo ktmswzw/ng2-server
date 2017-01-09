@@ -1,77 +1,26 @@
 package com.xecoder.common.exception;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.http.HttpStatus;
+import com.alibaba.fastjson.JSONObject;
 
 public class SystemErrorMsg{
 
     private Integer apistatus;
 
-    private Integer status;
-
-    private String path;
-
-    private String error;
-
-    @JsonProperty(value = "error_en")
-    private String errorEn;
-
-    @JsonProperty(value = "error_code")
-    private String errorCode;
+    private JSONObject result;
 
     public SystemErrorMsg() {
-        this.apistatus = 0;
+        this.apistatus = 1;
     }
 
     public Integer getApistatus() {
         return apistatus;
     }
 
-    public Integer getStatus() {
-        return status;
+    public JSONObject getResult() {
+        return result;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getErrorEn() {
-        return errorEn;
-    }
-
-    public void setErrorEn(String errorEn) {
-        this.errorEn = errorEn;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public void setStatus(HttpStatus status) {
-        this.status = status.value();
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public void setApistatus(Integer apistatus) {
-        this.apistatus = apistatus;
+    public void setResult(JSONObject result) {
+        this.result = result;
     }
 }
