@@ -30,10 +30,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (excluded != null && excluded.contains(request.getRequestURI())) {
             return true;
         }
-
-        HandlerMethod method = (HandlerMethod) handler;
-        boolean isAn = method.getMethod().isAnnotationPresent(NonAuthoritative.class);
-
+        boolean isAn = false;
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod method = (HandlerMethod) handler;
+            isAn = method.getMethod().isAnnotationPresent(NonAuthoritative.class);
+        }
         if (isAn) {
             return true;
         }

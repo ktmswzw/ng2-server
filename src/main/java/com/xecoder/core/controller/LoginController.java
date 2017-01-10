@@ -29,6 +29,7 @@ public class LoginController extends BaseController {
         User user = userService.login(username,password,device,deviceToken);
         object.put("nickname",user.getRealname());
         object.put("avatar",user.getAvatar());
+        object.put("id",user.getId());
         object.put("phone",user.getPhone());
         object.put("token",user.getToken());
         object.put("organization",user.getOrganization().getName());
