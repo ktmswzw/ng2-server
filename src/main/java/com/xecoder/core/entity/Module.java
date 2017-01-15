@@ -1,5 +1,6 @@
 package com.xecoder.core.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xecoder.config.BaseEntity;
 
 import javax.persistence.*;
@@ -299,6 +300,16 @@ public class Module extends BaseEntity implements Serializable{
 
 	public void setChildren(List<Module> children) {
 		this.children = children;
+		this.path = this.getUrl();
+        JSONObject object = new JSONObject();
+        JSONObject menu = new JSONObject();
+        menu.put("title",this.getName());
+        menu.put("icon",this.getClassName());
+        menu.put("selected",false);
+        menu.put("expanded",false);
+        menu.put("order",this.getPriority());
+        object.put("menu",menu);
+		this.data = object;
 	}
 
 	public List<Permission> getPermissions() {
@@ -308,5 +319,27 @@ public class Module extends BaseEntity implements Serializable{
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
-    
+
+
+	@Transient
+    private String path;
+
+    @Transient
+	private JSONObject data;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public JSONObject getData() {
+        return data;
+    }
+
+    public void setData(JSONObject data) {
+        this.data = data;
+    }
 }
